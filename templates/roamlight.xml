@@ -1,0 +1,105 @@
+<?xml version="1.0"?>
+<Container version="2">
+  <Name>Roamlight</Name>
+  <Repository>ghcr.io/racoon80/roamlight:latest</Repository>
+  <Registry>https://github.com/Racoon80/roamlight/pkgs/container/roamlight</Registry>
+  <Network>bridge</Network>
+  <MyIP/>
+  <Shell>bash</Shell>
+  <Privileged>false</Privileged>
+
+  <Support>https://github.com/Racoon80/roamlight/issues</Support>
+  <Project>https://github.com/Racoon80/roamlight</Project>
+  <ReadMe>https://github.com/Racoon80/roamlight#readme</ReadMe>
+
+  <Overview>
+Your family's photo album, on your own server, for your own people.&#13;
+&#13;
+Point Roamlight at the share where your photographs already live. It makes a web copy of each one, reads the date, the camera and the place out of the file, sorts everything into albums and puts the albums on a map. You decide, album by album, who in the family may see it, and nothing leaves the house unless you hand somebody a share link with a password and an end date.&#13;
+&#13;
+It understands JPEG, HEIC, RAW (CR3, ARW, NEF, DNG and more) and phone videos, never writes into your originals, and plays albums as a slideshow. Sign in with passwords or with your own single sign-on (Authentik, Keycloak and other OpenID Connect providers). There is a free iPhone app on the App Store, and an Android app that your own Roamlight hands out.&#13;
+&#13;
+Install it, open the web page and create the administrator account. To connect a phone, open "Phone &amp; tablet" on the site.
+  </Overview>
+
+  <Category>MediaApp:Photos</Category>
+  <WebUI>http://[IP]:[PORT:8080]/</WebUI>
+  <TemplateURL>https://raw.githubusercontent.com/Racoon80/unraid-templates/main/templates/roamlight.xml</TemplateURL>
+  <Icon>https://raw.githubusercontent.com/Racoon80/unraid-templates/main/icons/roamlight.png</Icon>
+
+  <Screenshot>https://raw.githubusercontent.com/Racoon80/roamlight/main/docs/screenshots/albums.jpg</Screenshot>
+  <Screenshot>https://raw.githubusercontent.com/Racoon80/roamlight/main/docs/screenshots/album.jpg</Screenshot>
+  <Screenshot>https://raw.githubusercontent.com/Racoon80/roamlight/main/docs/screenshots/photograph.jpg</Screenshot>
+  <Screenshot>https://raw.githubusercontent.com/Racoon80/roamlight/main/docs/screenshots/map.jpg</Screenshot>
+
+  <ExtraSearchTerms>photos photo gallery album family pictures heic raw map journey slideshow self-hosted iphone android</ExtraSearchTerms>
+  <Requires>A share that holds (or will hold) your photographs. Roamlight writes new uploads into it, so it has to be writable by the user set in PUID/PGID (99/100, "nobody:users", is right for a normal Unraid share). Create the administrator account right after the first start: until you do, anybody who can reach the page could create it (or set a Setup token below).</Requires>
+  <License>AGPL-3.0</License>
+
+  <ExtraParams>--restart unless-stopped</ExtraParams>
+  <PostArgs/>
+  <CPUset/>
+  <DateInstalled/>
+  <DonateText>Roamlight is free. If it brings you joy, a coffee is a lovely way to say so.</DonateText>
+  <DonateLink>https://www.buymeacoffee.com/dv7g</DonateLink>
+
+  <Config Name="WebUI Port" Target="8080" Default="8080" Mode="tcp"
+          Description="The web page."
+          Type="Port" Display="always" Required="true" Mask="false">8080</Config>
+
+  <Config Name="Photos" Target="/originals" Default="/mnt/user/photos" Mode="rw"
+          Description="Your photographs, as they came off the camera. Read, and never changed; new uploads are added here."
+          Type="Path" Display="always" Required="true" Mask="false">/mnt/user/photos</Config>
+
+  <Config Name="Library" Target="/library" Default="/mnt/user/appdata/roamlight/library" Mode="rw"
+          Description="The web copies Roamlight makes: one JPEG per photograph, in the same folders. They can be rebuilt from the photographs, but that takes a while."
+          Type="Path" Display="always" Required="true" Mask="false">/mnt/user/appdata/roamlight/library</Config>
+
+  <Config Name="Appdata" Target="/data" Default="/mnt/user/appdata/roamlight/data" Mode="rw"
+          Description="The database (albums, who sees what, accounts) and the smaller web sizes. Back this folder up."
+          Type="Path" Display="always" Required="true" Mask="false">/mnt/user/appdata/roamlight/data</Config>
+
+  <Config Name="Site address" Target="FAMILY_SITE_URL" Default="" Mode=""
+          Description="The address people type to reach Roamlight: http://your-server-ip:8080 at home, or https://photos.example.com behind a reverse proxy. Share links and the phone apps use it."
+          Type="Variable" Display="always" Required="true" Mask="false"></Config>
+
+  <Config Name="Site title" Target="FAMILY_SITE_TITLE" Default="Roamlight" Mode=""
+          Description="The name at the top of every page and on the home screen."
+          Type="Variable" Display="always" Required="false" Mask="false">Roamlight</Config>
+
+  <Config Name="Setup token" Target="FAMILY_SETUP_TOKEN" Default="" Mode=""
+          Description="Optional. A word of your own: the first-start page then only opens with ?t=that-word. Recommended if other people are on your network. Can be removed once the administrator account exists."
+          Type="Variable" Display="always" Required="false" Mask="true"></Config>
+
+  <Config Name="PUID" Target="PUID" Default="99" Mode=""
+          Description="The user the files are written as. 99 is Unraid's 'nobody'."
+          Type="Variable" Display="advanced" Required="true" Mask="false">99</Config>
+
+  <Config Name="PGID" Target="PGID" Default="100" Mode=""
+          Description="The group the files are written as. 100 is Unraid's 'users'."
+          Type="Variable" Display="advanced" Required="true" Mask="false">100</Config>
+
+  <Config Name="Sign-in" Target="FAMILY_AUTH" Default="local" Mode=""
+          Description="local (passwords), oidc (your own single sign-on) or local+oidc (both). Single sign-on can also be set up later on the Settings page."
+          Type="Variable" Display="advanced" Required="false" Mask="false">local</Config>
+
+  <Config Name="Trusted proxies" Target="FAMILY_TRUSTED_PROXIES" Default="" Mode=""
+          Description="If a reverse proxy (SWAG, Nginx Proxy Manager, Traefik...) is in front: its IP address, so the sign-in throttle can tell visitors apart."
+          Type="Variable" Display="advanced" Required="false" Mask="false"></Config>
+
+  <Config Name="Home" Target="FAMILY_HOME_NAME" Default="Luxembourg" Mode=""
+          Description="Where your journeys start when an album has no departure of its own (the name shown on the map)."
+          Type="Variable" Display="advanced" Required="false" Mask="false">Luxembourg</Config>
+
+  <Config Name="Home latitude" Target="FAMILY_HOME_LAT" Default="49.6117" Mode=""
+          Description="Latitude of your home, for the journey map."
+          Type="Variable" Display="advanced" Required="false" Mask="false">49.6117</Config>
+
+  <Config Name="Home longitude" Target="FAMILY_HOME_LON" Default="6.1319" Mode=""
+          Description="Longitude of your home, for the journey map."
+          Type="Variable" Display="advanced" Required="false" Mask="false">6.1319</Config>
+
+  <Config Name="Conversions at once" Target="FAMILY_WORKERS" Default="2" Mode=""
+          Description="How many photographs are converted at the same time. Each takes about three quarters of a CPU core."
+          Type="Variable" Display="advanced" Required="false" Mask="false">2</Config>
+</Container>
