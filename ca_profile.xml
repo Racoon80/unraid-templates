@@ -1,19 +1,24 @@
 <?xml version="1.0"?>
 <CommunityApplications>
   <Profile>
-Unraid templates for Roamlight, a family photo album you host yourself.
+Unraid templates by Racoon80.
 
-Roamlight turns the folder your photographs already live in into albums on a
+Roamlight is a family photo album you host yourself. It turns the folder your photographs already live in into albums on a
 map, and lets you decide album by album who in the family may see them. There
 is an iPhone app on the App Store and an Android app that your own server
-hands out. It is open source (AGPL-3.0), and the image is built by GitHub
-Actions for amd64 and arm64.
+hands out. It is open source (AGPL-3.0).
+
+Pokemon-Extender turns a picture of a Pokémon card into a print-and-cut insert
+for a PSA- or BGS-style acrylic case, ready for Bambu Suite and other cutters
+(MIT).
+
+Both images are built by GitHub Actions for amd64 and arm64.
 
 Questions and problems: the project's GitHub issues, linked from the template.
 A problem with the template itself: this repository's issues.
   </Profile>
   <Icon>https://raw.githubusercontent.com/Racoon80/unraid-templates/main/icons/roamlight.png</Icon>
-  <WebPage>https://github.com/Racoon80/roamlight</WebPage>
-  <DonateText>Roamlight is free. If it brings you joy, a coffee is a lovely way to say so.</DonateText>
+  <WebPage>https://github.com/Racoon80/unraid-templates</WebPage>
+  <DonateText>These apps are free. If one brings you joy, a coffee is a lovely way to say so.</DonateText>
   <DonateLink>https://www.buymeacoffee.com/dv7g</DonateLink>
 </CommunityApplications>

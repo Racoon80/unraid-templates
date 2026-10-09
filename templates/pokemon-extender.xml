@@ -1,0 +1,60 @@
+<?xml version="1.0"?>
+<Container version="2">
+  <Name>Pokemon-Extender</Name>
+  <Repository>ghcr.io/racoon80/pokemon-extender:latest</Repository>
+  <Registry>https://github.com/Racoon80/pokemon-extender/pkgs/container/pokemon-extender</Registry>
+  <Network>bridge</Network>
+  <MyIP/>
+  <Shell>bash</Shell>
+  <Privileged>false</Privileged>
+
+  <Support>https://github.com/Racoon80/pokemon-extender/issues</Support>
+  <Project>https://github.com/Racoon80/pokemon-extender</Project>
+  <ReadMe>https://github.com/Racoon80/pokemon-extender#readme</ReadMe>
+
+  <Overview>
+Your favourite card, framed like a graded slab: printed, cut and ready for the acrylic case.&#13;
+&#13;
+Upload a picture of a Pokémon card whose artwork carries on past the card's edge (painted by hand or extended with any AI tool). Pokemon-Extender finds the card, uses it as a ruler (a card is 63 x 88 mm) and turns the picture into an insert for a PSA- or BGS-style case: a print sheet in the exact size of the slab, with the cut lines for the outline, the label window and the card window.&#13;
+&#13;
+Downloads: an SVG that Bambu Suite takes as it is for Print Then Cut (H2D/H2S with the cutting module), the print with the cut path for other cutters, PDF/PNG and a DXF. Slab measurements come from templates you can correct. One picture takes a second; no GPU, no AI model, no account. English, Deutsch, Français and Lëtzebuergesch.&#13;
+&#13;
+There is no login: keep it in your LAN and never forward the port to the internet.
+  </Overview>
+
+  <Category>Tools:Utilities</Category>
+  <WebUI>http://[IP]:[PORT:8000]/</WebUI>
+  <TemplateURL>https://raw.githubusercontent.com/Racoon80/unraid-templates/main/templates/pokemon-extender.xml</TemplateURL>
+  <Icon>https://raw.githubusercontent.com/Racoon80/unraid-templates/main/icons/pokemon-extender.png</Icon>
+
+  <ExtraSearchTerms>pokemon tcg trading card slab psa bgs beckett graded print cut cricut bambu suite h2d acrylic case display insert</ExtraSearchTerms>
+  <Requires>No login: anyone who can reach the page can use it. Keep it inside your LAN.</Requires>
+  <License>MIT</License>
+
+  <ExtraParams>--restart unless-stopped</ExtraParams>
+  <PostArgs/>
+  <CPUset/>
+  <DateInstalled/>
+  <DonateText>Pokemon-Extender is free. If it saved you an afternoon with a craft knife, a coffee is a lovely way to say so.</DonateText>
+  <DonateLink>https://www.buymeacoffee.com/dv7g</DonateLink>
+
+  <Config Name="WebUI Port" Target="8000" Default="8000" Mode="tcp"
+          Description="The web page."
+          Type="Port" Display="always" Required="true" Mask="false">8000</Config>
+
+  <Config Name="Appdata" Target="/data" Default="/mnt/user/appdata/pokemon-extender" Mode="rw"
+          Description="Results (deleted after 72 hours) and your own slab formats: put a corrected psa.json or a new format into templates/ here."
+          Type="Path" Display="always" Required="true" Mask="false">/mnt/user/appdata/pokemon-extender</Config>
+
+  <Config Name="Upload limit (MB)" Target="MAX_UPLOAD_MB" Default="25" Mode=""
+          Description="Largest picture that can be uploaded."
+          Type="Variable" Display="advanced" Required="false" Mask="false">25</Config>
+
+  <Config Name="Pictures at once" Target="MAX_JOBS" Default="2" Mode=""
+          Description="How many pictures are processed at the same time; more wait up to 30 seconds."
+          Type="Variable" Display="advanced" Required="false" Mask="false">2</Config>
+
+  <Config Name="Keep results (hours)" Target="OUTPUT_TTL_HOURS" Default="72" Mode=""
+          Description="Results are deleted after this."
+          Type="Variable" Display="advanced" Required="false" Mask="false">72</Config>
+</Container>
